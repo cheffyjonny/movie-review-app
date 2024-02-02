@@ -6,22 +6,27 @@ It has used only React + TS.
 # Structure
 
 ```
-div
-├── fieldset
-│ ├── input
-│ ├── button
-│ └── span
-└── <List>
-└── <List.ListItem>
+HomePage
+├── AddNewReviewContainer.tsx
+│   ├── Container
+│   ├── Input
+│   ├── ErrorMsg
+│   ├── Select
+│   └── Button
+├── SearchReviewContainer.tsx
+│   ├── Container
+│   └── Input
+└── ReviewListContainer.tsx
+    ├── Container
+    └── Card
 ```
 
-- div : Parent component - Event handling for `onBlue(handleClickOffSelect)` and `onKeyDown(handleKeyDown)`
-- fieldset : Component for grouping - Event handling for `onClick(handleFieldsetClick)`
-- input : Input component - Event handling for `onChange(handleInputChange)`
-- button : Button component to take actions - Event handling for `onClick(handleClearClick`, `handleBiChevronUpClick` and `handleBiChevronDownClick)`
-- span : Displaying `label`
-- `<List>` : Options parent React component - Displaying option list through `createPortal` when `anchorEl` is `true`
-- `<List.ListItem>` : Option item React component - Event handling for `onMouseDown(handleSuggestionClick)` and `onMouseOver(handleOnMouseOver)`
+- AddNewReviewContainer.tsx : Parent component - Event handling for `onBlue(handleClickOffSelect)` and `onKeyDown(handleKeyDown)`
+  - fieldset : Component for grouping - Event handling for `onClick(handleFieldsetClick)`
+- SearchReviewContainer.tsx : Input component - Event handling for `onChange(handleInputChange)`
+  - fieldset : Component for grouping - Event handling for `onClick(handleFieldsetClick)`
+- ReviewListContainer.tsx : Button comp
+  - fieldset : Component for grouping - Event handling for `onClick(handleFieldsetClick)`
 
 # Logic
 
