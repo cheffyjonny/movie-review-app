@@ -1,6 +1,10 @@
+import { useState } from 'react'
+import { ToastContainer, toast } from 'react-toastify'
+import { SubmitHandler, useForm } from 'react-hook-form'
+import 'react-toastify/dist/ReactToastify.css'
+
 import type { Review } from '@/server/initialData'
-import newId from '@/utils/getNewId'
-import useForm from '@/hooks/useForm'
+import getNewId from '@/utils/getNewId'
 
 import Container from './ui/Container'
 import Input from './ui/Input'
@@ -9,7 +13,7 @@ import Button from './ui/Button'
 import ErrorMsg from './ui/ErrorMsg'
 
 type AddNewReviewContainerProps = {
-  onSubmit: (form: Review) => void
+  onSubmit: SubmitHandler<Review>
 }
 
 type Option = {
@@ -26,73 +30,75 @@ const options: Array<Option> = [
 ]
 
 const AddNewReviewContainer = ({ onSubmit }: AddNewReviewContainerProps) => {
+  const [newId, serNewId] = useState(getNewId)
+
   const {
-    errors,
-    touched,
-    handleInputChange,
-    handleSelectChange,
-    handleBlur,
+    register,
     handleSubmit,
+    reset,
+    formState: { errors },
   } = useForm<Review>({
-    initialValues: {
+    defaultValues: {
       id: newId,
       title: '',
       comment: '',
       score: 5,
     },
-    validate: (form: Review) => {
-      const errors = {
-        title: '',
-        comment: '',
-      }
-
-      if (!form.title) {
-        errors.title = '제목을 입력해 주세요'
-      }
-      if (!form.comment) {
-        errors.comment = '내용을 입력해 주세요'
-      }
-
-      return errors
-    },
-    onSubmit: (form: Review) => {
-      onSubmit(form)
-    },
   })
+
+  const localOnSubmit: SubmitHandler<Review> = (form) => {
+    // Submit
+    // John's NOTE : useForm convert the value to string, it needs to be converted back as the score is number type
+    if (typeof form.score === 'string') {
+      form.score = parseInt(form.score)
+    }
+    onSubmit!(form)
+
+    // Display successful message
+    toast.success('리뷰 등록 완료 하였습니다 😊')
+
+    // Set up for the next review
+    const nextId = newId + 1
+    serNewId(nextId)
+    reset({
+      id: nextId,
+      title: '',
+      comment: '',
+      score: 5,
+    })
+  }
 
   return (
     <Container
       title='신규 리뷰 등록'
       backgroundColor='#f5f5f5'
     >
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit(localOnSubmit)}>
         <Input
+          {...register('title', { required: '제목을 입력해 주세요' })}
           label='영화 제목'
           placeholder='제목을 입력해 주세요'
           name='title'
-          onChange={handleInputChange}
-          onBlur={handleBlur}
         />
         <ErrorMsg
-          hasError={!!touched.title && !!errors.title}
-          message={errors.title!}
+          hasError={errors.title}
+          message={errors.title?.message}
         />
         <Input
+          {...register('comment', { required: '내용을 입력해 주세요' })}
           label='한줄평'
           placeholder='내용을 입력해 주세요'
           name='comment'
-          onChange={handleInputChange}
-          onBlur={handleBlur}
         />
         <ErrorMsg
-          hasError={!!touched.comment && !!errors.comment}
-          message={errors.comment!}
+          hasError={errors.comment}
+          message={errors.comment?.message}
         />
         <Select
+          {...register('score')}
           label='별점'
           name='score'
           options={options}
-          onChange={handleSelectChange}
         />
         <Button
           customStyle={'margin-top:10px'}
@@ -100,6 +106,18 @@ const AddNewReviewContainer = ({ onSubmit }: AddNewReviewContainerProps) => {
           type='submit'
         />
       </form>
+      <ToastContainer
+        position='bottom-right'
+        autoClose={1700}
+        hideProgressBar={true}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme='light'
+      />
     </Container>
   )
 }

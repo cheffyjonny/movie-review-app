@@ -1,10 +1,12 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
+import { FieldError } from 'react-hook-form'
 
 type ErrorMsgProps = {
-  message: string
-  hasError: boolean
+  message: string | undefined
+  hasError: FieldError | undefined
 }
+
 const ErrorMsg = ({ message, hasError }: ErrorMsgProps) => {
   return (
     <>
