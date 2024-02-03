@@ -18,17 +18,17 @@ HomePage
         └── Card
 ```
 
-- AddNewReviewContainer.tsx : Parent component - Event handling for `onBlue(handleClickOffSelect)` and `onKeyDown(handleKeyDown)`
+- AddNewReviewContainer.tsx
   - Container : UI component(`children`, `backgroundColor`, `title`)
   - Input : UI component(`label`, `placeholder`, `backgroundColor`,`name`,`onChange`,`onBlur`)
   - ErrorMsg : UI component(`message`, `hasError`)
   - Select : UI component(`label`, `options`, `name`,`onChange`)
   - Button : UI component(`text`, `customStyle`, `type`)
   - ToastContainer : React library
-- SearchReviewContainer.tsx : Input component - Event handling for `onChange(handleInputChange)`
+- SearchReviewContainer.tsx
   - Container : UI component(`children`, `backgroundColor`, `title`)
   - Input : UI component(`label`, `placeholder`, `backgroundColor`,`name`,`onChange`,`onBlur`)
-- ReviewListContainer.tsx : Button comp
+- ReviewListContainer.tsx :
   - Container : UI component(`children`, `backgroundColor`, `title`)
   - Card : UI component(`title`, `comment`, `score`)
 
