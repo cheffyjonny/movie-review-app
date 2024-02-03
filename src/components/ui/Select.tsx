@@ -8,7 +8,8 @@ type SelectProps = {
   label: string
   options: Array<any>
   name: string
-  onChange: (e: SelectChangeEvent) => void
+  // John's NOTE : onChange is implemented as the component is a generic component. In this app, it's not used.
+  onChange?: (e: SelectChangeEvent) => void
 }
 const Select = forwardRef<HTMLSelectElement, SelectProps>(
   ({ label, options, name, onChange }, ref) => {

@@ -8,7 +8,8 @@ export type InputProps = {
   placeholder: string
   backgroundColor?: string
   name: string
-  onChange: (e: InputChangeEvent) => void
+  // John's NOTE : onChange and onBlue are implemented as the component is a generic component. In this app, it's not used.
+  onChange?: (e: InputChangeEvent) => void
   onBlur?: (e: InputChangeEvent) => void
 }
 
