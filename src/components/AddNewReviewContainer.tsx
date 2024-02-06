@@ -47,25 +47,30 @@ const AddNewReviewContainer = ({ onSubmit }: AddNewReviewContainerProps) => {
   })
 
   const localOnSubmit: SubmitHandler<Review> = (form) => {
-    // Submit
-    // John's NOTE : useForm convert the value to string, it needs to be converted back as the score is number type
-    if (typeof form.score === 'string') {
-      form.score = parseInt(form.score)
+    try {
+      // Submit
+      // John's NOTE : useForm convert the value to string, it needs to be converted back as the score is number type
+      if (typeof form.score === 'string') {
+        form.score = parseInt(form.score)
+      }
+      onSubmit!(form)
+
+      // Display successful message
+      toast.success('리뷰 등록 완료 하였습니다 😊')
+
+      // Set up for the next review
+      const nextId = newId + 1
+      serNewId(nextId)
+      reset({
+        id: nextId,
+        title: '',
+        comment: '',
+        score: 5,
+      })
+    } catch (error) {
+      // Display Error message
+      toast.error('서버 오류 🙁')
     }
-    onSubmit!(form)
-
-    // Display successful message
-    toast.success('리뷰 등록 완료 하였습니다 😊')
-
-    // Set up for the next review
-    const nextId = newId + 1
-    serNewId(nextId)
-    reset({
-      id: nextId,
-      title: '',
-      comment: '',
-      score: 5,
-    })
   }
 
   return (

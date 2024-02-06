@@ -10,6 +10,7 @@ type CardProps = {
 const Card = ({ title, comment, score }: CardProps) => {
   return (
     <div
+      data-testid='card'
       css={css`
         padding: 25px 22px;
         margin: 20px 0;
