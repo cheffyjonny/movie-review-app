@@ -1,3 +1,7 @@
+# Introduction
+
+Welcome to Mobile View Movie Review App. It's set up with localStorage.
+
 # Structure
 
 ```
